@@ -1,7 +1,7 @@
 {
-  "name": "gulp-serve",
-  "version": "1.2.0",
-  "description": "Serve your assets",
+  "name": "gulp-live-serve",
+  "version": "1.0.0",
+  "description": "Serve your assets with serve-index and livereload",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -14,13 +14,6 @@
     "connect"
   ],
   "author": "Gusakov Nikita",
-  "contributors": [
-    {
-      "name": "Ilya Lakhin",
-      "email": "eliah.lakhin@gmail.com",
-      "url": "http://lakhin.com/"
-    }
-  ],
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
