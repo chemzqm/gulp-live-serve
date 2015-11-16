@@ -5,6 +5,8 @@ var path = require('path');
 var util = require('gulp-util');
 var connect = require('connect');
 var serveStatic = require('serve-static');
+var livereload = require('connect-livereload');
+var serveIndex = require('serve-index');
 
 module.exports = function (config) {
   config || (config = {});
@@ -37,6 +39,9 @@ module.exports = function (config) {
     if (!config.middlewares) {
       config.middlewares = [];
     }
+    if (config.livereload !== false) {
+      config.middlewares.push(livereload(config.livereload))
+    }
 
     if (config.middleware) {
       config.middlewares.push(config.middleware);
@@ -48,6 +53,7 @@ module.exports = function (config) {
 
     config.root.forEach(function (path) {
       app.use(serveStatic(path));
+      app.use(serveIndex(config.root[0], config.serveIndex));
     });
 
     if (!config.port) {

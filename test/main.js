@@ -3,6 +3,7 @@ var http = require('http');
 var https = require('https');
 var fs = require('fs');
 var should = require('should');
+var assert = require('assert')
 
 require('mocha');
 
@@ -24,13 +25,26 @@ describe('static webserver', function() {
       });
     });
 
-    it('should be able to modify serving content', function(done) {
+    it('should serve directory', function (done) {
+      serve({
+        root: './test/',
+        port: 3005
+      })();
+
+      http.get('http://localhost:3005/', function(res) {
+        res.on('data', function(body) {
+          body.toString().should.match(/main\.js/)
+          done();
+        });
+      });
+    })
+
+    it('should be able to inject html', function(done) {
       var fixture = fs.readFileSync('./test/fixtures/modified-response.txt').toString();
 
       serve({
         root: './test/server/',
-        port: 3001,
-        middleware: require('connect-livereload')({port: 35729})
+        port: 3001
       })();
 
       http
@@ -43,7 +57,7 @@ describe('static webserver', function() {
           },
           function(res) {
             res.on('data', function(body) {
-              body.toString().should.equal(fixture);
+              assert(body.toString().indexOf(fixture) !== -1)
               done();
             });
           }
@@ -57,7 +71,8 @@ describe('static webserver', function() {
       serve({
         hostname: '127.0.0.1',
         root: './test/server/',
-        port: 3002,
+        livereload: false,
+        port: 3002
       })();
 
       http
@@ -84,6 +99,7 @@ describe('static webserver', function() {
       serve({
         root: './test/server/',
         port: 3003,
+        livereload: false,
         https: true
       })();
 

@@ -1,72 +1,31 @@
-gulp-serve
+gulp-live-serve
 ==========
-[![Circle CI](https://circleci.com/gh/nkt/gulp-serve/tree/master.svg?style=svg)](https://circleci.com/gh/nkt/gulp-serve/tree/master)
-[![Downloads](https://img.shields.io/npm/dm/gulp-serve.svg)](https://www.npmjs.com/package/gulp-serve)
 
-Provide connect-server functionality, using [connect.static](http://www.senchalabs.org/connect/static.html)
+A fork of [gulp-serve](https://github.com/nkt/gulp-serve)
 
-Install
-=======
-Install with [npm](https://npmjs.org/)
+with [serve-index](https://www.npmjs.com/package/serve-index) for serving directory, use `config.root` for url
 
-    npm i --save-dev gulp-serve
+and [connect-livereload](https://www.npmjs.com/package/connect-livereload) for adding the livereload script to the response
 
-Usage
-=====
+**We can't use gulp-serve with middlewares option to do this, because serve-index must be the last middleware,
+and connect-livereload should applied ahead of them **
 
-```js
-var gulp = require('gulp');
-var serve = require('gulp-serve');
+## Usage
 
-gulp.task('serve', serve('public'));
-gulp.task('serve-build', serve(['public', 'build']));
-gulp.task('serve-prod', serve({
-  root: ['public', 'build'],
-  port: 80,
-  middleware: function(req, res) {
-    // custom optional middleware
+``` js
+var serve = require('gulp-live-serve')
+serve({
+  root: './test/',
+  port: 3006,
+  livereload: {
+    port: 35729 // default port
   }
-}));
+})()
 ```
 
-With HTTPS enabled (using built-in key and certificate for `localhost`):
-```js
-var gulp = require('gulp');
-var serve = require('gulp-serve');
+## API
 
-gulp.task('serve', serve('public'));
-gulp.task('serve-build', serve(['public', 'build']));
-gulp.task('serve-prod', serve({
-  root: ['public', 'build'],
-  port: 443,
-  https: true,
-  middleware: function(req, res) {
-    // custom optional middleware
-  }
-}));
-```
+* `config.serveIndex` for options of serve-index
+* `config.livereload` for options of connect-livereload
 
-With HTTPS enabled (using self provided key and certificate):
-```js
-var gulp = require('gulp');
-var serve = require('gulp-serve');
-
-gulp.task('serve', serve('public'));
-gulp.task('serve-build', serve(['public', 'build']));
-gulp.task('serve-prod', serve({
-  root: ['public', 'build'],
-  port: 443,
-  https: {
-    key: 'path/to/cert.key',
-    cert: 'path/to/cert.pem'
-  },
-  middleware: function(req, res) {
-    // custom optional middleware
-  }
-}));
-```
-
-License
-=====
-
-[![MIT](https://img.shields.io/npm/l/express.svg)](LICENSE)
+See [gulp-serve#readme](https://github.com/nkt/gulp-serve#readme)
