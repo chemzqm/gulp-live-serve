@@ -28,10 +28,6 @@ module.exports = function (config) {
       config.root = ['.'];
     }
 
-    if (!config.hostname) {
-      config.hostname = 'localhost';
-    }
-
     if (typeof config.root === 'string') {
       config.root = [config.root];
     }
