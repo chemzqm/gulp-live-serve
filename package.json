@@ -1,11 +1,11 @@
 {
   "name": "gulp-live-serve",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Serve your assets with serve-index and livereload",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/nkt/gulp-serve.git"
+    "url": "git://github.com/chemzqm/gulp-live-serve.git"
   },
   "keywords": [
     "gulpfriendly",
